@@ -12,6 +12,7 @@ module.exports = PriorityQueue;
  *
  * @param {Function}
  * @return {PriorityQueue}
+ * @api public
  */
 function PriorityQueue(comparator) {
   this._comparator = comparator || PriorityQueue.DEFAULT_COMPARATOR;
@@ -25,6 +26,7 @@ function PriorityQueue(comparator) {
  * @param {String|Number} a
  * @param {String|Number} b
  * @return {Number}
+ * @api public
  */
 PriorityQueue.DEFAULT_COMPARATOR = function(a, b) {
   if (a instanceof Number) {
@@ -40,19 +42,21 @@ PriorityQueue.DEFAULT_COMPARATOR = function(a, b) {
 };
 
 /**
- * Returns whether the `PriorityQueue` is empty or not.
+ * Returns whether the priority queue is empty or not.
  *
  * @return {Boolean}
+ * @api public
  */
 PriorityQueue.prototype.empty = function() {
   return this.size() === 0;
 };
 
 /**
- * Peeks at the top element of the `PriorityQueue`.
+ * Peeks at the top element of the priority queue.
  *
  * @return {Object}
  * @throws {Error} when the queue is empty.
+ * @api public
  */
 PriorityQueue.prototype.peek = function() {
   if (this.empty()) throw new Error('PriorityQueue is empty');
@@ -61,10 +65,11 @@ PriorityQueue.prototype.peek = function() {
 };
 
 /**
- * Dequeues the top element of the `PriorityQueue`.
+ * Dequeues the top element of the priority queue.
  *
  * @return {Object}
  * @throws {Error} when the queue is empty.
+ * @api public
  */
 PriorityQueue.prototype.deq = function() {
   var first = this.peek();
@@ -99,10 +104,11 @@ PriorityQueue.prototype.deq = function() {
 };
 
 /**
- * Enqueues the `element` at the end of the `PriorityQueue` and returns its new size.
+ * Enqueues the `element` at the priority queue and returns its new size.
  *
  * @param {Object} element
  * @return {Number}
+ * @api public
  */
 PriorityQueue.prototype.enq = function(element) {
   var size = this._elements.push(element);
@@ -121,31 +127,34 @@ PriorityQueue.prototype.enq = function(element) {
 };
 
 /**
- * Returns the size of the `PriorityQueue`.
+ * Returns the size of the priority queue.
  *
  * @return {Number}
+ * @api public
  */
 PriorityQueue.prototype.size = function() {
   return this._elements.length;
 };
 
 /**
- * Compares the values at position `a` and `b` in the `Queue` using its 
+ * Compares the values at position `a` and `b` in the priority queue using its
  * comparator function.
  *
  * @param {Number} a
  * @param {Number} b
  * @return {Number}
+ * @api private
  */
 PriorityQueue.prototype._compare = function(a, b) {
   return this._comparator(this._elements[a], this._elements[b]);
 };
 
 /**
- * Swaps the values at position `a` and `b` in the `Queue`.
+ * Swaps the values at position `a` and `b` in the priority queue.
  *
  * @param {Number} a
  * @param {Number} b
+ * @api private
  */
 PriorityQueue.prototype._swap = function(a, b) {
   var aux = this._elements[a];

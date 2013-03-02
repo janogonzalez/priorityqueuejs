@@ -31,14 +31,20 @@ queue.enq({ cash: 150, name: 'Fran' );
 queue.size(); // 3
 queue.peek(); // { cash: 300, name: 'Jano' }
 queue.deq(); // { cash: 300, name: 'Jano' }
+queue.size(); // 2
 ```
 
 ## API
 
+### PriorityQueue()
+
+Initializes a new empty `PriorityQueue` wich uses `.DEFAULT_COMPARATOR()` as
+the comparator function for its elements.
+
 ### PriorityQueue(comparator)
 
-Initializes a new empty `PriorityQueue` with the given `comparator(a, b)`
-function, uses `.DEFAULT_COMPARATOR()` when no function is provided.
+Initializes a new empty `PriorityQueue` with uses the given `comparator(a, b)`
+function as the comparator for its elements.
 
 The comparator function must return a positive number when `a > b`, 0 when
 `a == b` and a negative number when `a < b`.
@@ -49,26 +55,25 @@ Compares two `Number` or `String` objects.
 
 ### PriorityQueue#deq()
 
-Dequeues the top element of the `PriorityQueue`.
+Dequeues the top element of the priority queue.
 Throws an `Error` when the queue is empty.
 
 ### PriorityQueue#empty()
 
-Returns whether the `PriorityQueue` is empty or not.
+Returns whether the priority queue is empty or not.
 
 ### PriorityQueue#enq(element)
 
-Enqueues the `element` at the end of the `PriorityQueue` and returns its new
-size.
+Enqueues the `element` at the priority queue and returns its new size.
 
 ### PriorityQueue#peek()
 
-Peeks at the top element of the `PriorityQueue`.
+Peeks at the top element of the priority queue.
 Throws an `Error` when the queue is empty.
 
 ### PriorityQueue#size()
 
-Returns the size of the `PriorityQueue`.
+Returns the size of the priority queue.
 
 ## Testing
 
