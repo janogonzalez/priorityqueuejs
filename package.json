@@ -5,14 +5,14 @@
   "author": "Jano González <info@janogonzalez.com>",
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "expect.js": "*"
   },
   "readmeFilename": "README.md",
   "main": "index.js",
   "dependencies": {
   },
   "scripts": {
-    "test": "mocha --require should"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",

@@ -77,6 +77,15 @@ Returns the size of the priority queue.
 
 ## Testing
 
+As component in the browser, open test/test.html in your browser:
+
+```
+$ make
+$ open test/test.html
+```
+
+As npm package:
+
 ```
 $ npm test
 ```
