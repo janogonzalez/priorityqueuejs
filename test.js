@@ -71,6 +71,8 @@ describe('PriorityQueue()', function() {
       queue.enq('zombie');
       queue.enq('fran');
       queue.enq('albert');
+      queue.enq('albert');
+      queue.enq('frank');
       queue.peek().should.be.equal('zombie');
     });
   });
@@ -90,15 +92,45 @@ describe('PriorityQueue()', function() {
       queue.enq('zombie');
       queue.enq('fran');
       queue.enq('albert');
+      queue.enq('albert');
+      queue.enq('frank');
+      queue.enq('jano');
+      queue.enq('valentina');
+      queue.enq('zombie');
+      queue.deq().should.be.equal('zombie');
       queue.deq().should.be.equal('zombie');
       queue.deq().should.be.equal('valentina');
-      queue.size().should.be.equal(3);
+      queue.deq().should.be.equal('valentina');
+      queue.deq().should.be.equal('jano');
+      queue.deq().should.be.equal('jano');
+      queue.deq().should.be.equal('frank');
+      queue.deq().should.be.equal('fran');
+      queue.deq().should.be.equal('albert');
+      queue.deq().should.be.equal('albert');
+      queue.empty().should.be.equal(true);
     });
 
     it('not fails with only one element', function() {
       var queue = new PriorityQueue();
       queue.enq('jano');
       queue.deq().should.be.equal('jano');
+      queue.size().should.be.equal(0);
+    });
+
+    it('works with custom comparators', function() {
+      var queue = new PriorityQueue(function(a, b) {
+        return b.priority - a.priority;
+      });
+
+      queue.enq({ priority: 100 });
+      queue.enq({ priority: -1 });
+      queue.enq({ priority: 0 });
+      queue.enq({ priority: 5 });
+      queue.deq().should.eql({ priority: -1 });
+      queue.deq().should.eql({ priority: 0 });
+      queue.deq().should.eql({ priority: 5 });
+      queue.deq().should.eql({ priority: 100 });
+      queue.empty().should.be.equal(true);
     });
   });
 
@@ -115,6 +147,19 @@ describe('PriorityQueue()', function() {
     it('returns the new size of the queue', function() {
       var queue = new PriorityQueue();
       queue.enq('jano').should.equal(1);
+    });
+
+    it('works with custom comparators', function() {
+      var queue = new PriorityQueue(function(a, b) {
+        return b.priority - a.priority;
+      });
+
+      queue.enq({ priority: 100 });
+      queue.enq({ priority: -1 });
+      queue.enq({ priority: 0 });
+      queue.enq({ priority: 5 });
+      queue.peek().should.eql({ priority: -1 });
+      queue.size().should.be.equal(4);
     });
   });
 

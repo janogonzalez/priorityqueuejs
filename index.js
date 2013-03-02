@@ -67,43 +67,32 @@ PriorityQueue.prototype.peek = function() {
  * @throws {Error} when the queue is empty.
  */
 PriorityQueue.prototype.deq = function() {
-  if (this.empty()) throw new Error('PriorityQueue is empty');
-
-  var first = this._elements[0];
-  var end = this._elements.pop();
+  var first = this.peek();
+  var last = this._elements.pop();
   var size = this.size();
 
-  this._elements[0] = end;
+  if (size === 0) return first;
 
-  var currentIndex = 0;
+  this._elements[0] = last;
+  var current = 0;
 
-  while (currentIndex < size) {
-    var largestIndex = currentIndex;
-    var leftIndex = 2 * currentIndex + 1;
-    var rightIndex = (2 * currentIndex) + 2;
+  while (current < size) {
+    var largest = current;
+    var left = (2 * current) + 1;
+    var right = (2 * current) + 2;
 
-    if (leftIndex >= size && rightIndex >= size) break;
-
-    var left = (leftIndex < size) ? this._elements[leftIndex] : null;
-    var right = (rightIndex < size) ? this._elements[rightIndex] : null;
-    var current = this._elements[currentIndex];
-    var largest = this._elements[largestIndex];
-
-    if (leftIndex < size && this._comparator(left, largest) > 0) {
-      largestIndex = leftIndex;
+    if (left < size && this._compare(left, largest) > 0) {
       largest = left;
     }
 
-    if (rightIndex < size && this._comparator(right, largest) > 0) {
-      largestIndex = rightIndex;
+    if (right < size && this._compare(right, largest) > 0) {
       largest = right;
     }
 
-    if (largestIndex != currentIndex) {
-      this._elements[currentIndex] = largest;
-      this._elements[largestIndex] = current;
-      currentIndex = largestIndex;
-    }
+    if (largest === current) break;
+
+    this._swap(largest, current);
+    current = largest;
   }
 
   return first;
@@ -117,19 +106,15 @@ PriorityQueue.prototype.deq = function() {
  */
 PriorityQueue.prototype.enq = function(element) {
   var size = this._elements.push(element);
-  var currentIndex = size - 1;
+  var current = size - 1;
 
-  while (currentIndex > 0) {
-    var parentIndex = Math.floor((currentIndex - 1) / 2);
-    var current = this._elements[currentIndex];
-    var parent = this._elements[parentIndex];
+  while (current > 0) {
+    var parent = Math.floor((current - 1) / 2);
 
-    if (this._comparator(current, parent) <= 0) break;
+    if (this._compare(current, parent) < 0) break;
 
-    this._elements[parentIndex] = current;
-    this._elements[currentIndex] = parent;
-
-    currentIndex = parentIndex;
+    this._swap(parent, current);
+    current = parent;
   }
 
   return size;
@@ -142,4 +127,28 @@ PriorityQueue.prototype.enq = function(element) {
  */
 PriorityQueue.prototype.size = function() {
   return this._elements.length;
+};
+
+/**
+ * Compares the values at position `a` and `b` in the `Queue` using its 
+ * comparator function.
+ *
+ * @param {Number} a
+ * @param {Number} b
+ * @return {Number}
+ */
+PriorityQueue.prototype._compare = function(a, b) {
+  return this._comparator(this._elements[a], this._elements[b]);
+};
+
+/**
+ * Swaps the values at position `a` and `b` in the `Queue`.
+ *
+ * @param {Number} a
+ * @param {Number} b
+ */
+PriorityQueue.prototype._swap = function(a, b) {
+  var aux = this._elements[a];
+  this._elements[a] = this._elements[b];
+  this._elements[b] = aux;
 };
