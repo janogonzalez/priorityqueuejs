@@ -29,7 +29,7 @@ function PriorityQueue(comparator) {
  * @api public
  */
 PriorityQueue.DEFAULT_COMPARATOR = function(a, b) {
-  if (a instanceof Number) {
+  if (a instanceof Number && b instanceof Number) {
     return a - b;
   } else {
     a = a.toString();
