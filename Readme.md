@@ -1,6 +1,6 @@
 # priorityqueue.js
 
-A simple queue data structure for Node.js and the browser.
+A simple priority queue data structure for Node.js and the browser.
 
 ## Installation
 
