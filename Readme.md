@@ -58,13 +58,13 @@ Compares two `Number` or `String` objects.
 Dequeues the top element of the priority queue.
 Throws an `Error` when the queue is empty.
 
-### PriorityQueue#empty()
-
-Returns whether the priority queue is empty or not.
-
 ### PriorityQueue#enq(element)
 
 Enqueues the `element` at the priority queue and returns its new size.
+
+### PriorityQueue#isEmpty()
+
+Returns whether the priority queue is empty or not.
 
 ### PriorityQueue#peek()
 

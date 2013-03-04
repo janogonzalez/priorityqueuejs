@@ -47,7 +47,7 @@ PriorityQueue.DEFAULT_COMPARATOR = function(a, b) {
  * @return {Boolean}
  * @api public
  */
-PriorityQueue.prototype.empty = function() {
+PriorityQueue.prototype.isEmpty = function() {
   return this.size() === 0;
 };
 
@@ -59,7 +59,7 @@ PriorityQueue.prototype.empty = function() {
  * @api public
  */
 PriorityQueue.prototype.peek = function() {
-  if (this.empty()) throw new Error('PriorityQueue is empty');
+  if (this.isEmpty()) throw new Error('PriorityQueue is empty');
 
   return this._elements[0];
 };

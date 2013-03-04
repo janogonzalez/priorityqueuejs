@@ -43,16 +43,16 @@ describe('PriorityQueue()', function() {
     });
   });
 
-  describe('#empty()', function() {
+  describe('#isEmpty()', function() {
     it('returns true when the queue is empty', function() {
       var queue = new PriorityQueue();
-      expect(queue.empty()).to.be(true);
+      expect(queue.isEmpty()).to.be(true);
     });
 
     it('returns false when the queue is not empty', function() {
       var queue = new PriorityQueue();
       queue.enq('jano');
-      expect(queue.empty()).to.be(false);
+      expect(queue.isEmpty()).to.be(false);
     });
   });
 
@@ -107,7 +107,7 @@ describe('PriorityQueue()', function() {
       expect(queue.deq()).to.be('fran');
       expect(queue.deq()).to.be('albert');
       expect(queue.deq()).to.be('albert');
-      expect(queue.empty()).to.be(true);
+      expect(queue.isEmpty()).to.be(true);
     });
 
     it('not fails with only one element', function() {
@@ -130,7 +130,7 @@ describe('PriorityQueue()', function() {
       expect(queue.deq()).to.be.eql({ priority: 0 });
       expect(queue.deq()).to.be.eql({ priority: 5 });
       expect(queue.deq()).to.be.eql({ priority: 100 });
-      expect(queue.empty()).to.be(true);
+      expect(queue.isEmpty()).to.be(true);
     });
   });
 
