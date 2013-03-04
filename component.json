@@ -2,13 +2,13 @@
   "name": "priorityqueuejs",
   "repo": "janogonzalez/priorityqueuejs",
   "description": "a simple priority queue data structure",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "keywords": [
     "heap",
     "priority",
     "queue",
-    "priorityqueue",
-    "datastructure"
+    "priority queue",
+    "data structure"
   ],
   "dependencies": {},
   "development": {},
