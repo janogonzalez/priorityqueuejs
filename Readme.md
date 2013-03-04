@@ -22,7 +22,7 @@ $ npm install priorityqueuejs
 var PriorityQueue = require('priorityqueuejs');
 
 var queue = new PriorityQueue(function(a, b) {
-  return a.priority - b.priority;
+  return a.cash - b.cash;
 });
 
 queue.enq({ cash: 250, name: 'Valentina' });
