@@ -137,6 +137,15 @@ PriorityQueue.prototype.size = function() {
 };
 
 /**
+ *  Iterates over queue elements
+ *
+ *  @param {Function} fn
+ */
+PriorityQueue.prototype.forEach = function(fn) {
+  return this._elements.forEach(fn);
+};
+
+/**
  * Compares the values at position `a` and `b` in the priority queue using its
  * comparator function.
  *
