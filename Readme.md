@@ -62,6 +62,11 @@ Throws an `Error` when the queue is empty.
 
 Enqueues the `element` at the priority queue and returns its new size.
 
+### PriorityQueue#forEach(fn)
+
+Executes `fn` on each element. Just be careful to not modify the priorities,
+since the queue won't reorder itself.
+
 ### PriorityQueue#isEmpty()
 
 Returns whether the priority queue is empty or not.
