@@ -16,6 +16,9 @@ As npm for Node.js:
 $ npm install priorityqueuejs
 ```
 
+If you just want a pre-built file for using in the web, check the [releases](
+https://github.com/janogonzalez/priorityqueuejs/releases) section.
+
 ## Example
 
 ```js
