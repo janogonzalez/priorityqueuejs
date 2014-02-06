@@ -1,6 +1,6 @@
 {
   "name": "priorityqueuejs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "a simple priority queue data structure",
   "author": "Jano González <info@janogonzalez.com>",
   "devDependencies": {
