@@ -176,4 +176,23 @@ describe('PriorityQueue()', function() {
       expect(queue.size()).to.be(2);
     });
   });
+
+  describe('#forEach()', function() {
+    it('iterates over all queue elements', function () {
+      var queue = new PriorityQueue();
+      queue.enq('a');
+      queue.enq('b');
+      var iteration = [];
+
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expect(iteration.length).to.be(2);
+      expect(iteration[0][0]).to.be.eql('b');
+      expect(iteration[0][1]).to.be.eql(0);
+      expect(iteration[1][0]).to.be.eql('a');
+      expect(iteration[1][1]).to.be.eql(1);
+    });
+  });
 });
