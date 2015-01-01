@@ -46,6 +46,7 @@ PriorityQueue.DEFAULT_COMPARATOR = function(a, b) {
  *
  * @return {Boolean}
  * @api public
+ * @complexity O(1)
  */
 PriorityQueue.prototype.isEmpty = function() {
   return this.size() === 0;
@@ -57,6 +58,7 @@ PriorityQueue.prototype.isEmpty = function() {
  * @return {Object}
  * @throws {Error} when the queue is empty.
  * @api public
+ * @complexity O(1)
  */
 PriorityQueue.prototype.peek = function() {
   if (this.isEmpty()) throw new Error('PriorityQueue is empty');
@@ -70,6 +72,7 @@ PriorityQueue.prototype.peek = function() {
  * @return {Object}
  * @throws {Error} when the queue is empty.
  * @api public
+ * @complexity O(log(n)) where `n` === this.size()
  */
 PriorityQueue.prototype.deq = function() {
   var first = this.peek();
@@ -109,6 +112,7 @@ PriorityQueue.prototype.deq = function() {
  * @param {Object} element
  * @return {Number}
  * @api public
+ * @complexity O(log(n)) where `n` === this.size()
  */
 PriorityQueue.prototype.enq = function(element) {
   var size = this._elements.push(element);
@@ -131,6 +135,7 @@ PriorityQueue.prototype.enq = function(element) {
  *
  * @return {Number}
  * @api public
+ * @complexity O(1)
  */
 PriorityQueue.prototype.size = function() {
   return this._elements.length;
@@ -140,6 +145,7 @@ PriorityQueue.prototype.size = function() {
  *  Iterates over queue elements
  *
  *  @param {Function} fn
+ *  @complexity O(n) where `n` === this.size() 
  */
 PriorityQueue.prototype.forEach = function(fn) {
   return this._elements.forEach(fn);
@@ -164,6 +170,7 @@ PriorityQueue.prototype._compare = function(a, b) {
  * @param {Number} a
  * @param {Number} b
  * @api private
+ * @complexity O(1)
  */
 PriorityQueue.prototype._swap = function(a, b) {
   var aux = this._elements[a];
