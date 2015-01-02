@@ -13,10 +13,27 @@ module.exports = PriorityQueue;
  * @param {Function}
  * @return {PriorityQueue}
  * @api public
+ * @complexity O(n) where `n` === array.length
  */
-function PriorityQueue(comparator) {
-  this._comparator = comparator || PriorityQueue.DEFAULT_COMPARATOR;
-  this._elements = [];
+function PriorityQueue(array, comparator) {
+  this._elements = []
+  if (array instanceof Array) {
+    if (array.length > 0) {
+      var size = array.length;
+      var i;
+      for (i = 0; i < size; i++) {
+        this._elements.push(array[i]);
+      }
+      this._comparator = comparator || PriorityQueue.DEFAULT_COMPARATOR;
+      for (i = Math.floor(size / 2); i >= 0; i--) {
+        _sink.call(this, i, size);
+      }
+    }
+  } else {
+    this._comparator = array || PriorityQueue.DEFAULT_COMPARATOR;
+  }
+
+  
 }
 
 /**
@@ -82,26 +99,8 @@ PriorityQueue.prototype.deq = function() {
   if (size === 0) return first;
 
   this._elements[0] = last;
-  var current = 0;
-
-  while (current < size) {
-    var largest = current;
-    var left = (2 * current) + 1;
-    var right = (2 * current) + 2;
-
-    if (left < size && _compare.call(this, left, largest) > 0) {
-      largest = left;
-    }
-
-    if (right < size && _compare.call(this, right, largest) > 0) {
-      largest = right;
-    }
-
-    if (largest === current) break;
-
-    _swap.call(this, largest, current);
-    current = largest;
-  }
+  
+  _sink.call(this, 0, size);
 
   return first;
 };
@@ -116,16 +115,8 @@ PriorityQueue.prototype.deq = function() {
  */
 PriorityQueue.prototype.enq = function(element) {
   var size = this._elements.push(element);
-  var current = size - 1;
 
-  while (current > 0) {
-    var parent = Math.floor((current - 1) / 2);
-
-    if (_compare.call(this, current, parent) < 0) break;
-
-    _swap.call(this, parent, current);
-    current = parent;
-  }
+  _swim.call(this, size - 1)
 
   return size;
 };
@@ -177,3 +168,43 @@ var _swap = function(a, b) {
   this._elements[a] = this._elements[b];
   this._elements[b] = aux;
 };
+
+/**
+ * Swaps the values at position `a` and `b` in the priority queue.
+ *
+ * @param {Number} a
+ * @param {Number} b
+ * @api private
+ * @complexity O(1)
+ */
+var _sink = function (current, size) {
+  while (current < size) {
+    var largest = current;
+    var left = (2 * current) + 1;
+    var right = (2 * current) + 2;
+
+    if (left < size && _compare.call(this, left, largest) > 0) {
+      largest = left;
+    }
+
+    if (right < size && _compare.call(this, right, largest) > 0) {
+      largest = right;
+    }
+
+    if (largest === current) break;
+
+    _swap.call(this, largest, current);
+    current = largest;
+  }
+}
+
+var _swim = function (current) {
+  while (current > 0) {
+    var parent = Math.floor((current - 1) / 2);
+
+    if (_compare.call(this, current, parent) < 0) break;
+
+    _swap.call(this, parent, current);
+    current = parent;
+  }
+}

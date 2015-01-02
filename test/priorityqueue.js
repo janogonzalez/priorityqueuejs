@@ -177,6 +177,48 @@ describe('PriorityQueue()', function() {
     });
   });
 
+  describe('#constructor()', function() {
+    it('create a empty priority queue', function () {
+      var queue = new PriorityQueue([]);
+
+      expect(queue.isEmpty()).to.be(true);
+    });
+
+    it('create a priority queue based on array', function () {
+      var queue = new PriorityQueue([3,4,1,7,6,4]);
+      var sorted_array = [];
+
+      while (!queue.isEmpty()) {
+        sorted_array.push(queue.deq());
+      }
+
+      expect(sorted_array[0]).to.be(7);
+      expect(sorted_array[1]).to.be(6);
+      expect(sorted_array[2]).to.be(4);
+      expect(sorted_array[3]).to.be(4);
+      expect(sorted_array[4]).to.be(3);
+      expect(sorted_array[5]).to.be(1);
+    });
+
+    it('create a priority queue based on array and custom comparator', function () {
+      var queue = new PriorityQueue([3,4,1,7,6,4], function (a, b) {
+        return b - a
+      });
+      var sorted_array = [];
+
+      while (!queue.isEmpty()) {
+        sorted_array.push(queue.deq());
+      }
+
+      expect(sorted_array[0]).to.be(1);
+      expect(sorted_array[1]).to.be(3);
+      expect(sorted_array[2]).to.be(4);
+      expect(sorted_array[3]).to.be(4);
+      expect(sorted_array[4]).to.be(6);
+      expect(sorted_array[5]).to.be(7);
+    });
+  });
+
   describe('#forEach()', function() {
     it('iterates over all queue elements', function () {
       var queue = new PriorityQueue();
