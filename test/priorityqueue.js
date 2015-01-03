@@ -1,3 +1,13 @@
+function constructSampleQueue() {
+  var queue = new PriorityQueue(['a', 'b', 'd']);
+  queue.forEach(function() {});
+  queue.enq('c')
+  queue.enq('e')
+  queue.enq('b')
+
+  return queue
+}
+
 describe('PriorityQueue()', function() {
   it('returns an new PriorityQueue', function() {
     expect(new PriorityQueue()).to.be.a(PriorityQueue);
@@ -132,6 +142,26 @@ describe('PriorityQueue()', function() {
       expect(queue.deq()).to.be.eql({ priority: 100 });
       expect(queue.isEmpty()).to.be(true);
     });
+
+    it('dequeues seven elements in queue of six elements', function () {
+      var queue = constructSampleQueue();
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('e');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('d');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('c');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('b');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('b');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('a');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(function() {
+        queue.deq();
+      }).to.throwException('PriorityQueue is empty');
+    });
   });
 
   describe('#enq()', function() {
@@ -227,16 +257,6 @@ describe('PriorityQueue()', function() {
         expect(item[1]).to.be.eql(index);
         expect(item[0]).to.be.eql(iteration_expected[index])
       });
-    }
-
-    function constructSampleQueue() {
-      var queue = new PriorityQueue(['a', 'b', 'd']);
-      queue.forEach(function() {});
-      queue.enq('c')
-      queue.enq('e')
-      queue.enq('b')
-
-      return queue
     }
 
     it('iterates over all queue elements in order (1)', function () {
