@@ -97,7 +97,7 @@ PriorityQueue.prototype.deq = function() {
   var obj = _peek.call(this)
   var first
   if (obj.inQueue) {
-    first = this.peek();
+    first = this._elements[0];
     var last = this._elements.pop();
     var k = this._elements.length;
   
@@ -157,7 +157,6 @@ PriorityQueue.prototype.size = function() {
 PriorityQueue.prototype.forEach = function(fn) {
   var index = 0;
   if (this._elements.length > 0) {
-    console.log('one')
     var sorted_array = []
     while (!this.isEmpty()) {
       var first = this.deq();
@@ -169,7 +168,6 @@ PriorityQueue.prototype.forEach = function(fn) {
     this._elements = [];
     this._index = 0;
   } else {
-    console.log('after')
     var i;
     var n = this._sorted_elements.length;
     for (i = this._index; i < n; i++) {
@@ -260,14 +258,65 @@ var _peek = function () {
   if (this.isEmpty()) throw new Error('PriorityQueue is empty');
 
   var obj = {}
-  var value = this._elements[0]
-  if (value === undefined) {
-    obj.inQueue = false
-    obj.value = this._sorted_elements[this._index]
-  } else {
+  var a = this._elements[0]
+  var b = this._sorted_elements[this._index]
+  if (b === undefined || (a !== undefined) && this._comparator(a, b) >= 0) {
     obj.inQueue = true
-    obj.value = value
+    obj.value = a
+  } else {
+    obj.inQueue = false
+    obj.value = b
   }
 
   return obj
 }
+function constructSampleQueue() {
+      var queue = new PriorityQueue(['a', 'b', 'd']);
+      queue.forEach(function() {});
+      queue.enq('c')
+      queue.enq('e')
+      queue.enq('b')
+
+      return queue
+    }
+
+
+var queue = constructSampleQueue();
+var q = constructSampleQueue()
+      console.log(q)
+      var top
+      top = q.deq()
+      console.log('dequeue 1')
+      console.log(q)
+      top = q.deq()
+      console.log('dequeue 2')
+      console.log(q)
+
+      var iteration = [];
+
+      q.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+      console.log(iteration)
+/*
+var iteration = []
+
+queue.forEach(function(element, index) {
+  iteration.push([element, index]);
+});
+
+iteration = []
+queue.forEach(function(element, index) {
+  iteration.push([element, index]);
+});
+console.log(iteration)
+
+queue.enq('c')
+console.log(queue._elements, queue._sorted_elements)
+
+
+iteration = []
+queue.forEach(function(element, index) {
+  iteration.push([element, index]);
+});
+console.log(iteration)*/

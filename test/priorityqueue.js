@@ -220,37 +220,129 @@ describe('PriorityQueue()', function() {
   });
 
   describe('#forEach()', function() {
-    it('iterates over all queue elements', function () {
-      var queue = new PriorityQueue();
-      queue.enq('a');
-      queue.enq('b');
-      queue.enq('c');
-      var iteration1 = [];
-      var iteration2 = [];
+    var queue = new PriorityQueue(['a', 'b', 'd'])
+
+    function expectForEach (iteration, iteration_expected, length_expected) {
+      iteration.forEach(function (item, index) {
+        expect(item[1]).to.be.eql(index);
+        expect(item[0]).to.be.eql(iteration_expected[index])
+      });
+    }
+
+    function constructSampleQueue() {
+      var queue = new PriorityQueue(['a', 'b', 'd']);
+      queue.forEach(function() {});
+      queue.enq('c')
+      queue.enq('e')
+      queue.enq('b')
+
+      return queue
+    }
+
+    it('iterates over all queue elements in order (1)', function () {
+      var iteration = [];
 
       queue.forEach(function(element, index) {
-        iteration1.push([element, index]);
+        iteration.push([element, index]);
       });
 
-      expect(iteration1.length).to.be(3);
-      expect(iteration1[0][0]).to.be.eql('c');
-      expect(iteration1[0][1]).to.be.eql(0);
-      expect(iteration1[1][0]).to.be.eql('b');
-      expect(iteration1[1][1]).to.be.eql(1);
-      expect(iteration1[2][0]).to.be.eql('a');
-      expect(iteration1[2][1]).to.be.eql(2);
-
-      queue.forEach(function(element, index) {
-        iteration2.push([element, index]);
-      });
-
-      expect(iteration2.length).to.be(3);
-      expect(iteration2[0][0]).to.be.eql('c');
-      expect(iteration2[0][1]).to.be.eql(0);
-      expect(iteration2[1][0]).to.be.eql('b');
-      expect(iteration2[1][1]).to.be.eql(1);
-      expect(iteration2[2][0]).to.be.eql('a');
-      expect(iteration2[2][1]).to.be.eql(2);
+      expectForEach(iteration, ['d', 'b', 'a'], 3)
     });
+
+    it('iterates over all queue elements in order (2)', function () {
+      var iteration = [];
+
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['d', 'b', 'a'], 3)
+    });
+
+    it('enqueues three elements at the end of the queue', function () {
+      queue.enq('c')
+      queue.enq('e')
+      queue.enq('b')
+      expect(queue.size()).to.be(6);
+    });
+
+    it('iterates over all queue elements in order (3)', function () {
+      var iteration = [];
+
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['e', 'd', 'c', 'b', 'b', 'a'], 6)
+    });
+
+    it('dequeues the top element of the queue', function() {
+      var top = queue.deq()
+      expect(top).to.be('e');
+    });
+
+    it('iterates over all queue elements in order (4)', function () {
+      var iteration = [];
+
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['d', 'c', 'b', 'b', 'a'], 5)
+    });
+
+    it('dequeues two elements of the queue and iterates over all queue elements in order', function() {
+      var q = constructSampleQueue()
+      var top
+      top = q.deq()
+      expect(top).to.be('e');
+      top = q.deq()
+      expect(top).to.be('d');
+
+      var iteration = [];
+
+      q.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['c', 'b', 'b', 'a'], 4)
+    });
+
+    it('dequeues three elements of the queue and iterates over all queue elements in order', function() {
+      var q = constructSampleQueue()
+      var top
+      top = q.deq()
+      expect(top).to.be('e');
+      top = q.deq()
+      expect(top).to.be('d');
+      top = q.deq()
+      expect(top).to.be('c');
+
+      var iteration = []
+
+      q.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['b', 'b', 'a'], 3)
+    });
+
+/*
+    it('iterates over all queue elements in order', function () {
+      var iteration = []
+      
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+      
+      expect(iteration[0][0]).to.be.eql('d');
+      expect(iteration[0][1]).to.be.eql(0);
+      expect(iteration[1][0]).to.be.eql('c');
+      expect(iteration[1][1]).to.be.eql(1);
+      expect(iteration[2][0]).to.be.eql('b');
+      expect(iteration[2][1]).to.be.eql(2);
+      expect(iteration[3][0]).to.be.eql('a');
+      expect(iteration[3][1]).to.be.eql(3);
+    });*/
   });
 });
