@@ -32,8 +32,6 @@ function PriorityQueue(array, comparator) {
   } else {
     this._comparator = array || PriorityQueue.DEFAULT_COMPARATOR;
   }
-
-  
 }
 
 /**
@@ -170,12 +168,12 @@ var _swap = function(a, b) {
 };
 
 /**
- * Swaps the values at position `a` and `b` in the priority queue.
+ * sink element in `current` position of this._element in accurate position of queue
  *
  * @param {Number} a
  * @param {Number} b
  * @api private
- * @complexity O(1)
+ * @complexity O(log(n))
  */
 var _sink = function (current, size) {
   while (current < size) {
@@ -198,6 +196,15 @@ var _sink = function (current, size) {
   }
 }
 
+
+/**
+ * swim element in `current` position of this._element in accurate position of queue
+ *
+ * @param {Number} a
+ * @param {Number} b
+ * @api private
+ * @complexity O(log(n))
+ */
 var _swim = function (current) {
   while (current > 0) {
     var parent = Math.floor((current - 1) / 2);
