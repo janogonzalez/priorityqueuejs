@@ -1,3 +1,13 @@
+function constructSampleQueue() {
+  var queue = new PriorityQueue(['a', 'b', 'd']);
+  queue.forEach(function() {});
+  queue.enq('c')
+  queue.enq('e')
+  queue.enq('b')
+
+  return queue
+}
+
 describe('PriorityQueue()', function() {
   it('returns an new PriorityQueue', function() {
     expect(new PriorityQueue()).to.be.a(PriorityQueue);
@@ -132,6 +142,26 @@ describe('PriorityQueue()', function() {
       expect(queue.deq()).to.be.eql({ priority: 100 });
       expect(queue.isEmpty()).to.be(true);
     });
+
+    it('dequeues seven elements in queue of six elements', function () {
+      var queue = constructSampleQueue();
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('e');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('d');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('c');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('b');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('b');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(queue.deq()).to.be.eql('a');
+      //console.log(queue._elements, queue._sorted_elements.slice(queue._index))
+      expect(function() {
+        queue.deq();
+      }).to.throwException('PriorityQueue is empty');
+    });
   });
 
   describe('#enq()', function() {
@@ -177,22 +207,162 @@ describe('PriorityQueue()', function() {
     });
   });
 
+  describe('#constructor()', function() {
+    it('create a empty priority queue', function () {
+      var queue = new PriorityQueue([]);
+
+      expect(queue.isEmpty()).to.be(true);
+    });
+
+    it('create a priority queue based on array', function () {
+      var queue = new PriorityQueue([3,4,1,7,6,4]);
+      var sorted_array = [];
+
+      while (!queue.isEmpty()) {
+        sorted_array.push(queue.deq());
+      }
+
+      expect(sorted_array[0]).to.be(7);
+      expect(sorted_array[1]).to.be(6);
+      expect(sorted_array[2]).to.be(4);
+      expect(sorted_array[3]).to.be(4);
+      expect(sorted_array[4]).to.be(3);
+      expect(sorted_array[5]).to.be(1);
+    });
+
+    it('create a priority queue based on array and custom comparator', function () {
+      var queue = new PriorityQueue([3,4,1,7,6,4], function (a, b) {
+        return b - a
+      });
+      var sorted_array = [];
+
+      while (!queue.isEmpty()) {
+        sorted_array.push(queue.deq());
+      }
+
+      expect(sorted_array[0]).to.be(1);
+      expect(sorted_array[1]).to.be(3);
+      expect(sorted_array[2]).to.be(4);
+      expect(sorted_array[3]).to.be(4);
+      expect(sorted_array[4]).to.be(6);
+      expect(sorted_array[5]).to.be(7);
+    });
+  });
+
   describe('#forEach()', function() {
-    it('iterates over all queue elements', function () {
-      var queue = new PriorityQueue();
-      queue.enq('a');
-      queue.enq('b');
+    var queue = new PriorityQueue(['a', 'b', 'd'])
+
+    function expectForEach (iteration, iteration_expected, length_expected) {
+      iteration.forEach(function (item, index) {
+        expect(item[1]).to.be.eql(index);
+        expect(item[0]).to.be.eql(iteration_expected[index])
+      });
+    }
+
+    it('iterates over all queue elements in order (1)', function () {
       var iteration = [];
 
       queue.forEach(function(element, index) {
         iteration.push([element, index]);
       });
 
-      expect(iteration.length).to.be(2);
-      expect(iteration[0][0]).to.be.eql('b');
-      expect(iteration[0][1]).to.be.eql(0);
-      expect(iteration[1][0]).to.be.eql('a');
-      expect(iteration[1][1]).to.be.eql(1);
+      expectForEach(iteration, ['d', 'b', 'a'], 3)
     });
+
+    it('iterates over all queue elements in order (2)', function () {
+      var iteration = [];
+
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['d', 'b', 'a'], 3)
+    });
+
+    it('enqueues three elements at the end of the queue', function () {
+      queue.enq('c')
+      queue.enq('e')
+      queue.enq('b')
+      expect(queue.size()).to.be(6);
+    });
+
+    it('iterates over all queue elements in order (3)', function () {
+      var iteration = [];
+
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['e', 'd', 'c', 'b', 'b', 'a'], 6)
+    });
+
+    it('dequeues the top element of the queue', function() {
+      var top = queue.deq()
+      expect(top).to.be('e');
+    });
+
+    it('iterates over all queue elements in order (4)', function () {
+      var iteration = [];
+
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['d', 'c', 'b', 'b', 'a'], 5)
+    });
+
+    it('dequeues two elements of the queue and iterates over all queue elements in order', function() {
+      var q = constructSampleQueue()
+      var top
+      top = q.deq()
+      expect(top).to.be('e');
+      top = q.deq()
+      expect(top).to.be('d');
+
+      var iteration = [];
+
+      q.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['c', 'b', 'b', 'a'], 4)
+    });
+
+    it('dequeues three elements of the queue and iterates over all queue elements in order', function() {
+      var q = constructSampleQueue()
+      var top
+      top = q.deq()
+      expect(top).to.be('e');
+      top = q.deq()
+      expect(top).to.be('d');
+      top = q.deq()
+      expect(top).to.be('c');
+
+      var iteration = []
+
+      q.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+
+      expectForEach(iteration, ['b', 'b', 'a'], 3)
+    });
+
+/*
+    it('iterates over all queue elements in order', function () {
+      var iteration = []
+      
+      queue.forEach(function(element, index) {
+        iteration.push([element, index]);
+      });
+      
+      expect(iteration[0][0]).to.be.eql('d');
+      expect(iteration[0][1]).to.be.eql(0);
+      expect(iteration[1][0]).to.be.eql('c');
+      expect(iteration[1][1]).to.be.eql(1);
+      expect(iteration[2][0]).to.be.eql('b');
+      expect(iteration[2][1]).to.be.eql(2);
+      expect(iteration[3][0]).to.be.eql('a');
+      expect(iteration[3][1]).to.be.eql(3);
+    });*/
   });
 });
