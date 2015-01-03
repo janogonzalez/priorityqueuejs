@@ -224,17 +224,33 @@ describe('PriorityQueue()', function() {
       var queue = new PriorityQueue();
       queue.enq('a');
       queue.enq('b');
-      var iteration = [];
+      queue.enq('c');
+      var iteration1 = [];
+      var iteration2 = [];
 
       queue.forEach(function(element, index) {
-        iteration.push([element, index]);
+        iteration1.push([element, index]);
       });
 
-      expect(iteration.length).to.be(2);
-      expect(iteration[0][0]).to.be.eql('b');
-      expect(iteration[0][1]).to.be.eql(0);
-      expect(iteration[1][0]).to.be.eql('a');
-      expect(iteration[1][1]).to.be.eql(1);
+      expect(iteration1.length).to.be(3);
+      expect(iteration1[0][0]).to.be.eql('c');
+      expect(iteration1[0][1]).to.be.eql(0);
+      expect(iteration1[1][0]).to.be.eql('b');
+      expect(iteration1[1][1]).to.be.eql(1);
+      expect(iteration1[2][0]).to.be.eql('a');
+      expect(iteration1[2][1]).to.be.eql(2);
+
+      queue.forEach(function(element, index) {
+        iteration2.push([element, index]);
+      });
+
+      expect(iteration2.length).to.be(3);
+      expect(iteration2[0][0]).to.be.eql('c');
+      expect(iteration2[0][1]).to.be.eql(0);
+      expect(iteration2[1][0]).to.be.eql('b');
+      expect(iteration2[1][1]).to.be.eql(1);
+      expect(iteration2[2][0]).to.be.eql('a');
+      expect(iteration2[2][1]).to.be.eql(2);
     });
   });
 });

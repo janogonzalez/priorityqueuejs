@@ -10,13 +10,17 @@ module.exports = PriorityQueue;
  * The comparator function must return a positive number when `a > b`, 0 when
  * `a == b` and a negative number when `a < b`.
  *
- * @param {Function}
+ * @param {Array} array=[]
+ * @param {Function: Object x Object -> Number} comparator=this.DEFAULT_COMPARATOR
  * @return {PriorityQueue}
  * @api public
  * @complexity O(n) where `n` === array.length
  */
 function PriorityQueue(array, comparator) {
   this._elements = []
+  this._index = 0
+  this._sorted_elements = []
+
   if (array instanceof Array) {
     if (array.length > 0) {
       var size = array.length;
@@ -78,7 +82,7 @@ PriorityQueue.prototype.isEmpty = function() {
 PriorityQueue.prototype.peek = function() {
   if (this.isEmpty()) throw new Error('PriorityQueue is empty');
 
-  return this._elements[0];
+  return _peek.call(this).value;
 };
 
 /**
@@ -90,15 +94,27 @@ PriorityQueue.prototype.peek = function() {
  * @complexity O(log(n)) where `n` === this.size()
  */
 PriorityQueue.prototype.deq = function() {
-  var first = this.peek();
-  var last = this._elements.pop();
-  var size = this.size();
-
-  if (size === 0) return first;
-
-  this._elements[0] = last;
+  var obj = _peek.call(this)
+  var first
+  if (obj.inQueue) {
+    first = this.peek();
+    var last = this._elements.pop();
+    var k = this._elements.length;
   
-  _sink.call(this, 0, size);
+    if (k === 0) return first;
+  
+    this._elements[0] = last;
+    
+    _sink.call(this, 0, k);
+  } else {
+    first = this._sorted_elements[this._index];
+    this._index++;
+
+    if (this._index > 0 && this._index >= this._sorted_elements.length) {
+      this._index = 0
+      this._sorted_elements = []
+    }
+  }
 
   return first;
 };
@@ -127,17 +143,41 @@ PriorityQueue.prototype.enq = function(element) {
  * @complexity O(1)
  */
 PriorityQueue.prototype.size = function() {
-  return this._elements.length;
+  return this._elements.length + this._sorted_elements.length - this._index;
 };
 
 /**
  *  Iterates over queue elements
  *
- *  @param {Function} fn
- *  @complexity O(n) where `n` === this.size() 
+ *  @param {Function: this x Object x index -> undefined} fn
+ *  @param {boolean} sorted=true
+ *  @complexity O(k * log(k) + n) 
+ *    where `k` === this._elements.length and `n` === this.sorted_elements.length - this._index
  */
 PriorityQueue.prototype.forEach = function(fn) {
-  return this._elements.forEach(fn);
+  var index = 0;
+  if (this._elements.length > 0) {
+    console.log('one')
+    var sorted_array = []
+    while (!this.isEmpty()) {
+      var first = this.deq();
+      fn.call(this, first, index);
+      sorted_array.push(first);
+      index++;
+    }
+    this._sorted_elements = sorted_array;
+    this._elements = [];
+    this._index = 0;
+  } else {
+    console.log('after')
+    var i;
+    var n = this._sorted_elements.length;
+    for (i = this._index; i < n; i++) {
+      var first = this._sorted_elements[i];
+      fn.call(this, first, index);
+      index++;
+    }
+  }
 };
 
 /**
@@ -214,4 +254,20 @@ var _swim = function (current) {
     _swap.call(this, parent, current);
     current = parent;
   }
+}
+
+var _peek = function () {
+  if (this.isEmpty()) throw new Error('PriorityQueue is empty');
+
+  var obj = {}
+  var value = this._elements[0]
+  if (value === undefined) {
+    obj.inQueue = false
+    obj.value = this._sorted_elements[this._index]
+  } else {
+    obj.inQueue = true
+    obj.value = value
+  }
+
+  return obj
 }
