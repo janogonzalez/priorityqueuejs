@@ -195,4 +195,25 @@ describe('PriorityQueue()', function() {
       expect(iteration[1][1]).to.be.eql(1);
     });
   });
+
+  describe('queue behaviour when there are elements with the same priority', function() {
+    it('test 1)', function () {
+      var queue = new PriorityQueue(function (a, b) { return b.pri - a.pri; });
+      var a = { pri: 1, val: 1 }
+      var b = { pri: 1, val: 2 }
+      var c = { pri: 1, val: 3 }
+      queue.enq(a);
+      queue.enq(b);
+      queue.enq(c);
+      console.log(queue._elements)
+
+      expect(queue.size()).to.be(3);
+      expect(queue.deq()).to.be(a);
+      expect(queue.size()).to.be(2);
+      expect(queue.deq()).to.be(b);
+      expect(queue.size()).to.be(1);
+      expect(queue.deq()).to.be(c);
+      expect(queue.size()).to.be(0);
+    });
+  });
 });

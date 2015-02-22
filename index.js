@@ -86,11 +86,11 @@ PriorityQueue.prototype.deq = function() {
     var left = (2 * current) + 1;
     var right = (2 * current) + 2;
 
-    if (left < size && this._compare(left, largest) > 0) {
+    if (left < size && this._compare(left, largest) >= 0) {
       largest = left;
     }
 
-    if (right < size && this._compare(right, largest) > 0) {
+    if (right < size && this._compare(right, largest) >= 0) {
       largest = right;
     }
 
@@ -117,7 +117,7 @@ PriorityQueue.prototype.enq = function(element) {
   while (current > 0) {
     var parent = Math.floor((current - 1) / 2);
 
-    if (this._compare(current, parent) < 0) break;
+    if (this._compare(current, parent) <= 0) break;
 
     this._swap(parent, current);
     current = parent;
