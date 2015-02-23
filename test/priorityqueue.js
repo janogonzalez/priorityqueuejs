@@ -40,6 +40,13 @@ describe('PriorityQueue()', function() {
       it('returns a positive number when a > b', function() {
         expect(PriorityQueue.DEFAULT_COMPARATOR(10, 1)).to.be.above(0);
       });
+
+      it('works with `Number` objects', function() {
+        var a = Number(10)
+        var b = Number(1000)
+
+        expect(PriorityQueue.DEFAULT_COMPARATOR(a, b)).to.be.below(0);
+      });
     });
   });
 
