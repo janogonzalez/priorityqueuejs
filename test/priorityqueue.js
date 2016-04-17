@@ -235,5 +235,23 @@ describe('PriorityQueue()', function() {
       expect(queue.size()).to.be(2);
       expect(_b.val).to.be('b');
     })
+
+    it('should update an element with new priority', function(){
+      var queue = new PriorityQueue(function (a,b) { return b.pri - a.pri });
+      var a = { pri: 1, val: 'a' }
+      var b = { pri: 2, val: 'b' }
+      var c = { pri: 3, val: 'c' }
+      var d = { pri: 0, val: 'd' }
+      queue.enq(a);
+      queue.enq(b);
+      queue.enq(c);
+
+      // Increase priority value of b
+      queue.updatePriority(1,(n)=>n.pri -= 10)
+
+      queue.enq(d); // This should not be the first to pop
+
+      expect(queue.peek()).to.eql({pri:-8, val:'b'})
+    })
   })
 });

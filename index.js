@@ -135,11 +135,30 @@ PriorityQueue.prototype.enq = function(element) {
  * @api public
  */
 PriorityQueue.prototype.removeAt = function(i){
-  if (this.size()<i+1){
+  if (this.size()<i+1 || i<0){
     throw new Error('Index out of range');
   }
 
   return this._elements.splice(i,1)[0];
+}
+
+/**
+ * Updates priority of an element.
+ * As a consequence, the order will be recalculated.
+ *
+ * @param {Number} index of element to update
+ * @param {Function} update the element priority or content
+ * @api public
+ */
+PriorityQueue.prototype.updatePriority = function(i,updater){
+  
+  // Remove an element, update it 
+  // and enqueue it back in
+  var el = this.removeAt(i);
+
+  updater(el); // In-place attribute updating
+
+  return this.enq(el);
 }
 
 
