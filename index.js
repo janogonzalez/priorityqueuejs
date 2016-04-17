@@ -126,6 +126,23 @@ PriorityQueue.prototype.enq = function(element) {
   return size;
 };
 
+
+/**
+ * Removes an element at the specified index
+ *
+ * @param {Number} index of the element to remove
+ * @return {Object} removed element
+ * @api public
+ */
+PriorityQueue.prototype.removeAt = function(i){
+  if (this.size()<i+1){
+    throw new Error('Index out of range');
+  }
+
+  return this._elements.splice(i,1)[0];
+}
+
+
 /**
  * Returns the size of the priority queue.
  *
@@ -170,3 +187,4 @@ PriorityQueue.prototype._swap = function(a, b) {
   this._elements[a] = this._elements[b];
   this._elements[b] = aux;
 };
+

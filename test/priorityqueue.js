@@ -218,4 +218,22 @@ describe('PriorityQueue()', function() {
       expect(queue.deq()).to.be(c);
     });
   });
+
+  describe('Element removal & re-adjustment of priority', function(){
+    it('should remove an element at specified index', function () {
+      var queue = new PriorityQueue(function (a,b) { return b.pri - a.pri });
+      var a = { pri: 1, val: 'a' }
+      var b = { pri: 2, val: 'b' }
+      var c = { pri: 3, val: 'c' }
+      queue.enq(a);
+      queue.enq(b);
+      queue.enq(c);
+
+      // Remove b
+      var _b = queue.removeAt(1);
+
+      expect(queue.size()).to.be(2);
+      expect(_b.val).to.be('b');
+    })
+  })
 });
