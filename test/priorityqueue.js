@@ -220,6 +220,23 @@ describe('PriorityQueue()', function() {
   });
 
   describe('Element removal & re-adjustment of priority', function(){
+    it('should peek an element at specified index', function () {
+      var queue = new PriorityQueue(function (a,b) { return b.pri - a.pri });
+      var a = { pri: 1, val: 'a' }
+      var b = { pri: 2, val: 'b' }
+      var c = { pri: 3, val: 'c' }
+      queue.enq(a);
+      queue.enq(b);
+      queue.enq(c);
+
+      // Remove b
+      var _b = queue.peekAt(1);
+
+      expect(queue.size()).to.be(3);
+      expect(_b.val).to.be('b');
+    })
+
+
     it('should remove an element at specified index', function () {
       var queue = new PriorityQueue(function (a,b) { return b.pri - a.pri });
       var a = { pri: 1, val: 'a' }
@@ -246,7 +263,7 @@ describe('PriorityQueue()', function() {
       queue.enq(b);
       queue.enq(c);
 
-      // Increase priority value of b
+      // Decrease priority of #b by 10
       queue.updatePriority(1,(n)=>n.pri -= 10)
 
       queue.enq(d); // This should not be the first to pop

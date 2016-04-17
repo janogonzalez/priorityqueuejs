@@ -64,6 +64,22 @@ PriorityQueue.prototype.peek = function() {
   return this._elements[0];
 };
 
+
+/**
+ * Peeks at a specified index of the priority queue.
+ *
+ * @param {Number} index
+ * @return {Object}
+ * @api public
+ */
+PriorityQueue.prototype.peekAt = function(i){
+  if (this.size()<i+1 || i<0){
+    throw new Error('Index out of range');
+  }
+
+  return this._elements[i]
+}
+
 /**
  * Dequeues the top element of the priority queue.
  *
