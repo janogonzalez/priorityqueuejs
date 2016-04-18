@@ -64,6 +64,22 @@ PriorityQueue.prototype.peek = function() {
   return this._elements[0];
 };
 
+
+/**
+ * Peeks at a specified index of the priority queue.
+ *
+ * @param {Number} index
+ * @return {Object}
+ * @api public
+ */
+PriorityQueue.prototype.peekAt = function(i){
+  if (this.size()<i+1 || i<0){
+    throw new Error('Index out of range');
+  }
+
+  return this._elements[i]
+}
+
 /**
  * Dequeues the top element of the priority queue.
  *
@@ -126,6 +142,42 @@ PriorityQueue.prototype.enq = function(element) {
   return size;
 };
 
+
+/**
+ * Removes an element at the specified index
+ *
+ * @param {Number} index of the element to remove
+ * @return {Object} removed element
+ * @api public
+ */
+PriorityQueue.prototype.removeAt = function(i){
+  if (this.size()<i+1 || i<0){
+    throw new Error('Index out of range');
+  }
+
+  return this._elements.splice(i,1)[0];
+}
+
+/**
+ * Updates priority of an element.
+ * As a consequence, the order will be recalculated.
+ *
+ * @param {Number} index of element to update
+ * @param {Function} update the element priority or content
+ * @api public
+ */
+PriorityQueue.prototype.updatePriority = function(i,updater){
+  
+  // Remove an element, update it 
+  // and enqueue it back in
+  var el = this.removeAt(i);
+
+  updater(el); // In-place attribute updating
+
+  return this.enq(el);
+}
+
+
 /**
  * Returns the size of the priority queue.
  *
@@ -170,3 +222,4 @@ PriorityQueue.prototype._swap = function(a, b) {
   this._elements[a] = this._elements[b];
   this._elements[b] = aux;
 };
+

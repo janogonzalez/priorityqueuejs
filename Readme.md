@@ -79,6 +79,24 @@ Returns whether the priority queue is empty or not.
 Peeks at the top element of the priority queue.
 Throws an `Error` when the queue is empty.
 
+### PriorityQueue#peekAt(i)
+
+Peeks at the specified index of the priority queue.
+
+### PriorityQueue#removeAt(i)
+
+Removes an element from the priority queue at the specified index `i`.
+The function returns a removed element.
+
+### PriorityQueue#updatePriority(i,updater)
+
+Updates an element at the specified index `i` and automatically 
+rearranges the queue order.
+
+The function requires an `updater` function which 
+takes an element as its only argument and makes an in-place 
+updating on a certain element object.
+
 ### PriorityQueue#size()
 
 Returns the size of the priority queue.
