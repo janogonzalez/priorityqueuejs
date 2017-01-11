@@ -1,9 +1,4 @@
 /**
- * Expose `PriorityQueue`.
- */
-module.exports = PriorityQueue;
-
-/**
  * Initializes a new empty `PriorityQueue` with the given `comparator(a, b)`
  * function, uses `.DEFAULT_COMPARATOR()` when no function is provided.
  *
@@ -170,3 +165,12 @@ PriorityQueue.prototype._swap = function(a, b) {
   this._elements[a] = this._elements[b];
   this._elements[b] = aux;
 };
+
+/**
+ * Expose `PriorityQueue`.
+ */
+if(typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = PriorityQueue;
+} else {
+  window.PriorityQueue = PriorityQueue;
+}
