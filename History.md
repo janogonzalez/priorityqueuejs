@@ -1,4 +1,4 @@
-2.0.0 / TBD
+2.0.0 / 2020-05-07
 ==================
 
   * Stop supporting component and browser builds.
