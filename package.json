@@ -9,8 +9,7 @@
   },
   "readmeFilename": "README.md",
   "main": "index.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "test": "mocha"
   },

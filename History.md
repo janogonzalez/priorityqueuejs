@@ -1,3 +1,8 @@
+2.0.0 / TBD
+==================
+
+  * Stop supporting component and browser builds.
+
 1.0.0 / 2015-02-23
 ==================
 

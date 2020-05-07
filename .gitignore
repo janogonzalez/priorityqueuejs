@@ -1,5 +1,3 @@
-# Component
-components
-build
-# NPM
+# NPM
 node_modules
+package-lock.json

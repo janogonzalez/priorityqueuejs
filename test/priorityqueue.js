@@ -1,3 +1,6 @@
+var expect = require('expect.js');
+var PriorityQueue = require('..')
+
 describe('PriorityQueue()', function() {
   it('returns an new PriorityQueue', function() {
     expect(new PriorityQueue()).to.be.a(PriorityQueue);

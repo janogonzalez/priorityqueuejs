@@ -1,23 +1,12 @@
 # priorityqueue.js
 
-A simple priority queue data structure for Node.js and the browser.
+A simple priority queue data structure for Node.js.
 
 ## Installation
-
-As component for the browser:
-
-```
-$ component install janogonzalez/priorityqueuejs
-```
-
-As npm for Node.js:
 
 ```
 $ npm install priorityqueuejs
 ```
-
-If you just want a pre-built file for using in the web, check the [releases](
-https://github.com/janogonzalez/priorityqueuejs/releases) section.
 
 ## Example
 
@@ -85,16 +74,8 @@ Returns the size of the priority queue.
 
 ## Testing
 
-As component in the browser, open test/test.html in your browser:
-
 ```
-$ make
-$ open test/test.html
-```
-
-As npm package:
-
-```
+$ npm install
 $ npm test
 ```
 
