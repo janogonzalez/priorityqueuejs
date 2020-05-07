@@ -1,5 +1,8 @@
 # priorityqueue.js
 
+[![Build Status](https://travis-ci.com/janogonzalez/priorityqueuejs.svg?branch=master)](
+  https://travis-ci.com/janogonzalez/priorityqueuejs)
+
 A simple priority queue data structure for Node.js.
 
 ## Installation
