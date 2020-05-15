@@ -8,7 +8,7 @@ A simple priority queue data structure for Node.js.
 ## Installation
 
 ```
-$ npm install priorityqueuejs
+npm install priorityqueuejs
 ```
 
 ## Example
@@ -78,8 +78,8 @@ Returns the size of the priority queue.
 ## Testing
 
 ```
-$ npm install
-$ npm test
+npm install
+npm test
 ```
 
 ## Licence
