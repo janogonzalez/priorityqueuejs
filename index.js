@@ -137,6 +137,17 @@ PriorityQueue.prototype.size = function() {
 };
 
 /**
+ * Clears the Priority Queue object
+ * 
+ * @api public 
+ */
+PriorityQueue.prototype.clear = function() {
+  while(this._elements.length) {
+    this.deq();
+  }
+};
+
+/**
  *  Iterates over queue elements
  *
  *  @param {Function} fn
